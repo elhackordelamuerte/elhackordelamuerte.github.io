@@ -34,7 +34,7 @@ function showMessage(response) {
 
     // Update text content, show message, and change image source to "dance.gif"
     const yesMessage = document.getElementById("question");
-    yesMessage.textContent = "Je t'aime mon coeur.Hâte de passer notre première saint Valentin😘😘";
+    yesMessage.innerHTML = "Je t'aime mon coeur.<br />Hâte de passer notre première saint Valentin😘😘";
     yesMessage.style.display = "block";
     yesMessage.style.fontStyle = "normal";
     document.getElementsByClassName("image")[0].src = "images/dance.gif";
