@@ -1,45 +1,85 @@
-function showMessage(response) {
-  if (response === "No") {
-    const noButton = document.getElementById("no-button");
-    const container = document.querySelector(".container");
-    const maxWidth = window.innerWidth - noButton.offsetWidth;
-    const maxHeight = window.innerHeight - noButton.offsetHeight;
+const answer = ['chuis bieng', 'je suis bieng', 'bieng','jsuis bieng'];
+const hint = 'Indice : C\'est un meme drôle';
+let userInput = document.getElementById('userInput');
+let message = document.getElementById('message');
+let submitBtn = document.getElementById('submitBtn');
+let wrongAttempts = 0;
+let shake = false;
+let isWrong = false;
+let showHintButton = false;
 
-    // Set button position to absolute
-    noButton.style.position = "absolute";
+message.textContent = 'Trouve le mot ou la phrase\nIndice : C\'est un meme drôle';
 
-    // Change image source to "gun.gif"
-    document.getElementsByClassName("image")[0].src = "images/flop.png";
-
-    // Generate random coordinates within the visible container
-    const randomX = Math.max(0, Math.floor(Math.random() * maxWidth));
-    const randomY = Math.max(0, Math.floor(Math.random() * maxHeight));
-
-    // Apply new coordinates to the button
-    noButton.style.left = randomX + "px";
-    noButton.style.top = randomY + "px";
-
-    // Update text content and hide name message
-    document.getElementById("question").textContent =
-      "Aaha, tu te crois drôle.Clique sur oui sale esclave";
-    document.getElementById("name").style.display = "none";
-
-    // Optional: You can also add a timeout to reset the position after a few seconds
+submitBtn.addEventListener('click', checkAnswer);
+userInput.addEventListener('keyup', (event) => {
+  if (event.key === 'Enter') {
+    checkAnswer();
   }
+});
 
-  if (response === "Yes") {
-    // Remove name message and no button
-    document.getElementById("name").remove();
-    document.getElementById("no-button").remove();
-
-    // Update text content, show message, and change image source to "dance.gif"
-    const yesMessage = document.getElementById("question");
-    yesMessage.innerHTML = "Je t'aime mon coeur.<br />Hâte de passer notre première saint Valentin😘😘";
-    yesMessage.style.display = "block";
-    yesMessage.style.fontStyle = "normal";
-    document.getElementsByClassName("image")[0].src = "images/dance.gif";
-
-    // Remove yes button
-    document.getElementById("yesButton").remove();
+function checkAnswer() {
+  if (answer.includes(userInput.value.toLowerCase())) {
+    message.textContent = 'Bravo, t\'as trouvé le mot mon bébé!J\'ai une surprise pour toi dans le vessellier !';
+    resetGame();
+  } else {
+    wrongAttempts++;
+    shake = true;
+    isWrong = true;
+    message.textContent = getRandomMessage();
+    userInput.classList.add('shake', 'wrong');
+    setTimeout(() => {
+      shake = false;
+      isWrong = false;
+      userInput.classList.remove('shake', 'wrong');
+    }, 500);
+    if (wrongAttempts === 3) {
+      showHintButton = true;
+      let hintBtn = document.createElement('button');
+      hintBtn.textContent = 'Indice';
+      hintBtn.style.position = 'absolute';
+      hintBtn.style.left = `${Math.random() * (window.innerWidth - 100)}px`;
+      hintBtn.style.top = `${Math.random() * (window.innerHeight - 100)}px`;
+      hintBtn.addEventListener('click', showHint);
+      document.body.appendChild(hintBtn);
+    }
   }
 }
+
+function showHint() {
+  // Supprime le bouton d'indice
+  this.parentNode.removeChild(this);
+  
+  // Crée l'élément d'image
+  let hintImage = new Image();
+  hintImage.src = 'image.png';
+  hintImage.style.position = 'absolute';
+  hintImage.style.left = '50%';
+  hintImage.style.top = '50%';
+  hintImage.style.transform = 'translate(-50%, -50%)'; // Centrer l'image
+  document.body.appendChild(hintImage);
+}
+
+function getRandomMessage() {
+  const messages = [
+    'Oh lala c\'est pas bon',
+    'Recommence sale esclave',
+    'Not bad but bad'
+  ];
+  return messages[Math.floor(Math.random() * messages.length)];
+}
+
+
+// function resetGame() {
+//   userInput.value = '';
+//   wrongAttempts = 0;
+//   showHintButton = false;
+//   answer = prompt('Entrez un nouveau mot ou une nouvelle phrase à deviner') || 'mot de passe';
+//   hint = prompt('Entrez un indice pour ce mot ou cette phrase') || 'Indice : C\'est un mot commun';
+//   message.textContent = 'Entrez le mot ou la phrase';
+//   let hintBtns = document.querySelectorAll('body > button');
+//   hintBtns.forEach(btn => btn.remove());
+// }
+
+// "Bravo, t'as trouvé le mot mon bébé!J'ai une surprise pour toi dans le vessellier !"
+// "C\'est un meme drôle"
+// const targetWords = ["chuis bieng", "je suis bieng", "bieng","jsuis bieng"];

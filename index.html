@@ -1,32 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Valentine's Proposal</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pour tuer l'ennui</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <div class="container">
-        <div class="Mainprompt">
-            <img class="image" src="images/catflower.jpg"></img>
-            <h1 class="hh" id="name">Salut mon coeur!<br>Bien sur que je suis dev donc:</h1>
-            <p class="pp" id="question">Tu veux être ma watiValentine?</p>
-            <div class="buttons">
-                <button id="no-button" onclick="showMessage('No')">No</button>
-                <button onclick="showMessage('Yes')" id="yesButton">Yes</button>
-            </div>
-            <div class="hidden-message" id="no-message">
-                <p>Aaha, tu te crois drôle.<br>Clique sur oui sale esclave</p>
-            </div>
-            <div class="hidden-message" id="yes-message">
-                <p>C'est bien mon coeur.</p>
-            </div>
-        </div>
-    </div>
-    <script src="script.js"></script>
+  <div id="game">
+    <h1>Jeu d'énigme</h1>
+    <p id="message"></p>
+    <input type="text" id="userInput" autocomplete="off">
+    <button id="submitBtn">Valider</button>
+  </div>
+  <script src="script.js"></script>
 </body>
-
 </html>
